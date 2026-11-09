@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <em>Specializing in Zero-Trust Architecture, Shift-Left CI/CD Pipelines, Kubernetes Hardening, Policy-as-Code, and Immutable Infrastructure as Code.</em>
+  <em>Specializing in Zero-Trust Architecture, Shift-Left CI/CD Pipelines, Kubernetes Hardening, Policy-as-Code, Security Automation & SOAR.</em>
 </p>
 
 ---
@@ -17,16 +17,17 @@
 
 I am a **Senior DevSecOps & Cloud Security Engineer** with 6+ years of experience bridging the gap between Software Development, Security Engineering, and Cloud Infrastructure. 
 
-My core focus is designing and operating **Automated Security Golden Paths**—enabling engineering teams to ship high-velocity, production-grade cloud workloads without sacrificing compliance, data privacy, or security posture.
+My core focus is designing and operating **Automated Security Golden Paths & SOAR Playbooks**—enabling engineering teams to ship high-velocity, production-grade cloud workloads without sacrificing compliance, data privacy, or security posture.
 
 - 🛡️ **Shift-Left Security:** Automated SAST (Semgrep), SCA (Trivy), Secret Scanning (Gitleaks), and DAST (OWASP ZAP) with GitHub Security SARIF integration.
 - 🔐 **Supply Chain Security:** SLSA Level 3 compliance, SBOM generation (Syft/CycloneDX), and keyless cryptographic container signing (Cosign / Sigstore OIDC).
 - ☸️ **Kubernetes Hardening:** Pod Security Standards (PSS Restricted), Kyverno & OPA/Gatekeeper admission control, Cilium/Calico Zero-Trust NetworkPolicies, and Falco eBPF runtime threat detection.
 - ☁️ **Cloud Infrastructure as Code:** Terraform / OpenTofu enterprise modules compliant with CIS AWS Foundations Benchmark 3.0, verified via Checkov and tfsec.
+- ⚡ **Security Automation & SOAR:** Event-driven Python auto-remediation engine for AWS GuardDuty, Security Hub, and K8s threat containment with zero human delay.
 
 ---
 
-## 🏛️ Enterprise DevSecOps Architecture (The Golden Path)
+## 🏛️ Enterprise DevSecOps & SOAR Architecture (The Golden Path)
 
 ```mermaid
 flowchart LR
@@ -56,11 +57,17 @@ flowchart LR
         K --> L[EKS / GKE Pods]
         L --> M[Calico NetworkPolicy<br/>Default Deny + mTLS]
         L --> N[Falco eBPF<br/>Runtime Threat Detection]
-        L --> O[Vault Agent Injector<br/>Dynamic Ephemeral Secrets]
+    end
+
+    subgraph SOAR ["6. Auto-Remediation & Response (Python SOAR)"]
+        N & O[AWS GuardDuty /<br/>Security Hub] --> P[EventBridge /<br/>Webhook Router]
+        P --> Q[Python SOAR Dispatcher<br/>Pydantic v2 Validation]
+        Q --> R[Auto-Remediate<br/>Deactivate IAM / S3 Block / SG Quarantine]
+        R --> S[Slack / Telegram<br/>Real-time Incident Alert]
     end
 
     classDef stage fill:#0a192f,stroke:#4fd6a8,stroke-width:1.5px,color:#e6f1ff;
-    class Dev,CI,Registry,CD,Runtime stage;
+    class Dev,CI,Registry,CD,Runtime,SOAR stage;
 ```
 
 ---
@@ -70,6 +77,7 @@ flowchart LR
 | Domain | Tools & Technologies |
 |---|---|
 | **Cloud Platforms** | AWS (EKS, VPC, KMS, IAM Least-Privilege, GuardDuty, Security Hub), GCP, Multi-Cloud Hybrid |
+| **Security Automation & SOAR** | Python 3.12, AsyncIO, Pydantic v2, Boto3, AWS EventBridge, Slack/Telegram Webhooks |
 | **Containers & K8s** | Kubernetes, Docker, Helm 3, ArgoCD (GitOps), Cilium (eBPF CNI), Istio Service Mesh |
 | **Infrastructure as Code** | Terraform, OpenTofu, Terragrunt, Ansible, Packer, Infracost |
 | **Pipeline Security (Shift-Left)** | Semgrep (Custom rules), Trivy, Gitleaks, TruffleHog, SonarQube, OWASP ZAP |
@@ -87,16 +95,22 @@ flowchart LR
 > **Production-grade Reusable DevSecOps Golden Path Pipeline**
 - Automated Security Gates: Gitleaks (Secrets) ➔ Semgrep (SAST) ➔ Trivy (SCA) ➔ Distroless Build ➔ Trivy Container Scan ➔ Syft (SBOM) ➔ Cosign Keyless Image Signing ➔ OWASP ZAP (DAST).
 - Uploads SARIF alerts natively into GitHub Security tab.
-- Scheduled daily CVE vulnerability assessment and automated pull request patching.
+- Scheduled daily CVE vulnerability assessment and automated remediation.
 
-### 2. [hardened-k8s-gitops-platform](https://github.com/huy8114644/hardened-k8s-gitops-platform)
+### 2. [cloud-security-auto-remediation](https://github.com/huy8114644/cloud-security-auto-remediation)
+> **Cloud Security SOAR & Event-Driven Auto-Remediation Engine**
+- Automated zero-human-delay threat containment for AWS GuardDuty, Security Hub, and Kubernetes audit logs.
+- Automated playbooks for compromised IAM Access Key deactivation, S3 Block Public Access enforcement, EC2/Pod quarantine isolation.
+- Engineered with Python 3.12, AsyncIO, Pydantic v2, and rich Slack/Telegram incident response cards.
+
+### 3. [hardened-k8s-gitops-platform](https://github.com/huy8114644/hardened-k8s-gitops-platform)
 > **Zero-Trust Kubernetes Hardening & GitOps Blueprint**
 - Kyverno Policy-as-Code enforcing Pod Security Standards (PSS) Restricted: block privileged pods, require read-only root filesystems, drop all capabilities, enforce non-root UID.
 - Zero-Trust Calico NetworkPolicies (Default Deny Ingress/Egress, DNS egress allowlist).
 - Falco eBPF runtime threat detection rules (shell spawned in pod, sensitive directory tampering).
 - HashiCorp Vault Agent Injector configuration for dynamic database credential leasing.
 
-### 3. [terraform-aws-security-baseline](https://github.com/huy8114644/terraform-aws-security-baseline)
+### 4. [terraform-aws-security-baseline](https://github.com/huy8114644/terraform-aws-security-baseline)
 > **Enterprise AWS Infrastructure as Code Compliant with CIS Benchmark 3.0**
 - Hardened EKS (Private cluster endpoint, envelope encryption with KMS CMK, Bottlerocket nodes).
 - Secure VPC (Flow Logs enabled, S3 VPC Gateway Endpoints, isolated database subnets).
