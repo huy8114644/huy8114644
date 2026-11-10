@@ -118,6 +118,20 @@ flowchart LR
 
 ---
 
+### 5. [linux-hardening-identity-stack](https://github.com/huy8114644/linux-hardening-identity-stack)
+> **Linux Hardening & Enterprise Identity Lab**
+- CIS-inspired Ansible controls for Ubuntu and RHEL, with explicit host-change opt-in.
+- Keycloak and OpenLDAP lab provisioning, read-only federation, OIDC client scopes and SAML configuration.
+- Molecule/Docker scenarios and CI checks; full CIS certification is not asserted.
+
+### 6. [finops-resource-auditor](https://github.com/huy8114644/finops-resource-auditor)
+> **Read-only AWS FinOps Automation CLI**
+- Discover unattached EBS volumes, aged snapshots, idle load balancers and old ECR images.
+- Produce review reports and estimated monthly savings with documented assumptions.
+- Offline fixtures and mocked AWS tests; findings require owner review before any cleanup.
+
+---
+
 ## 📊 GitHub Security & Activity Analytics
 
 <p align="center">
